@@ -2,10 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;500&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
 button {
-  background-color: black !important;
+  background-color: #213555 !important;
+  border: none !important;
+  outline: none !important;
+  height: 45px !important;
+  box-shadow: none !important;
+  border-radius: 2px !important;
 }
 
 button:hover {
   background-color: #4f709c !important;
+}
+
+input {
+  height: 45px;
+  width: 100%;
+  border: 1px solid #c6c6c6;
+  padding-left: 15px;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #353535;
+}
+
+label {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #353535 !important;
+}
+
+a {
+  text-decoration: none !important;
+  color: var(--primary) !important;
 }
