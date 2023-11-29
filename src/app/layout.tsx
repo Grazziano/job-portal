@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import '../stylesheets/commonClasses.css';
+import '../stylesheets/antdOverride.css';
+import '../stylesheets/layout.css';
 import LayoutProvider from '@/components/LayoutProvider';
 
 export const metadata: Metadata = {
