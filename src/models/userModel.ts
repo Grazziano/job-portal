@@ -30,4 +30,6 @@ const userModel = mongoose.model('user');
 mongoose.deleteModel(userModel.modelName);
 
 // create new model
-module.exports = mongoose.model('users', userSchema);
+const User = mongoose.model('users', userSchema);
+
+export default User;
