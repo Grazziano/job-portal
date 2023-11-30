@@ -1,7 +1,9 @@
 'use client';
 import React from 'react';
-import { Button, Form, Radio } from 'antd';
+import { Button, Form, Radio, message } from 'antd';
 import Link from 'next/link';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 interface LoginProps {
   userType: string;
@@ -10,8 +12,16 @@ interface LoginProps {
 }
 
 export default function Login() {
-  const onFinish = (values: LoginProps) => {
-    console.log(values);
+  const router = useRouter();
+
+  const onFinish = async (values: LoginProps) => {
+    try {
+      const response = await axios.post('/api/users/login', values);
+      message.success(response.data.message);
+      router.push('/');
+    } catch (error: any) {
+      message.error(error.response.data.message || 'Something went wrong');
+    }
   };
 
   return (
