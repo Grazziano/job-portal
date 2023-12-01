@@ -4,6 +4,7 @@ import '../stylesheets/commonClasses.css';
 import '../stylesheets/antdOverride.css';
 import '../stylesheets/layout.css';
 import LayoutProvider from '@/components/LayoutProvider';
+import ReduxProvider from '@/components/ReduxProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,5 +16,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <LayoutProvider>{children}</LayoutProvider>;
+  return (
+    <ReduxProvider>
+      <LayoutProvider>{children}</LayoutProvider>
+    </ReduxProvider>
+  );
 }

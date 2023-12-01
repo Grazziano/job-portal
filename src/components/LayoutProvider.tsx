@@ -1,7 +1,10 @@
 'use client';
-import React, { useState } from 'react';
-import { ConfigProvider } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { ConfigProvider, message } from 'antd';
 import { usePathname } from 'next/navigation';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetCurrentUser } from '@/redux/usersSlice';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,6 +13,21 @@ interface LayoutProps {
 export default function LayoutProvider({ children }: LayoutProps) {
   const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: any) => state.users);
+
+  const getCurrentUser = async () => {
+    try {
+      const response = await axios.get('/api/users/currentuser');
+      dispatch(SetCurrentUser(response.data.data));
+    } catch (error: any) {
+      message.error(error.response.data.message || 'Something went wrong');
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [pathname]);
 
   const menuItems = [
     { name: 'Home', path: '/', icon: 'ri-home-7-line' },
@@ -87,8 +105,8 @@ export default function LayoutProvider({ children }: LayoutProps) {
                 <div className="user-info">
                   {isSideBarExpanded && (
                     <div className="flex flex-col">
-                      <span>User name</span>
-                      <span>User Email</span>
+                      <span>{currentUser?.name}</span>
+                      <span>{currentUser?.email}</span>
                     </div>
                   )}
 

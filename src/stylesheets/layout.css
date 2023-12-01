@@ -18,7 +18,7 @@
 .logo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 15px;
 }
@@ -65,8 +65,9 @@
 
 .user-info {
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 10px;
   padding: 10px;
   color: white;
+  font-size: 14px;
 }
