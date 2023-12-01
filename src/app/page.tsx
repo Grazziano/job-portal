@@ -1,23 +1,27 @@
-'use client';
-import { message } from 'antd';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { cookies } from 'next/headers';
 
-export default function Home() {
-  const [user, setUser] = useState<any>(null);
+export async function getUser() {
+  try {
+    const token = cookies().get('token');
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get('/api/users/currentuser');
-      setUser(response.data.data);
-    } catch (error: any) {
-      message.error(error.response.data.message || error.message);
-    }
-  };
+    const response = await axios.get(
+      'http://localhost:3000/api/users/currentuser',
+      {
+        headers: {
+          Cookie: `token=${token?.value}`,
+        },
+      }
+    );
 
-  useEffect(() => {
-    getUser();
-  }, []);
+    return response.data.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export default async function Home() {
+  const user: any = await getUser();
 
   return (
     <main>
