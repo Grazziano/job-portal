@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { ConfigProvider } from 'antd';
 import { usePathname } from 'next/navigation';
 
@@ -8,6 +8,7 @@ interface LayoutProps {
 }
 
 export default function LayoutProvider({ children }: LayoutProps) {
+  const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
   const pathname = usePathname();
 
   const menuItems = [
@@ -45,7 +46,19 @@ export default function LayoutProvider({ children }: LayoutProps) {
             <div className="layout-parent">
               <div className="sidebar">
                 <div className="logo">
-                  <h1>Jobs</h1>
+                  {isSideBarExpanded && <h1>Jobs</h1>}
+                  {!isSideBarExpanded && (
+                    <i
+                      className="ri-menu-line"
+                      onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
+                    ></i>
+                  )}
+                  {isSideBarExpanded && (
+                    <i
+                      className="ri-close-line"
+                      onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
+                    ></i>
+                  )}
                 </div>
 
                 <div className="menu-items">
@@ -58,17 +71,28 @@ export default function LayoutProvider({ children }: LayoutProps) {
                           isActive ? 'active-menu-item' : ''
                         }`}
                         key={index}
+                        style={{
+                          justifyContent: isSideBarExpanded
+                            ? 'flex-start'
+                            : 'center',
+                        }}
                       >
                         <i className={item.icon}></i>
-                        <span>{item.name}</span>
+                        {isSideBarExpanded && <span>{item.name}</span>}
                       </div>
                     );
                   })}
                 </div>
 
-                <div>
-                  <span>User name</span>
-                  <span>Logout</span>
+                <div className="user-info">
+                  {isSideBarExpanded && (
+                    <div className="flex flex-col">
+                      <span>User name</span>
+                      <span>User Email</span>
+                    </div>
+                  )}
+
+                  <i className="ri-logout-box-r-line"></i>
                 </div>
               </div>
               <div className="body">{children}</div>

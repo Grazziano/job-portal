@@ -15,6 +15,25 @@
   padding: 5px 20px;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.logo h1 {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.logo i {
+  font-size: 20px;
+  color: white;
+}
+
 .menu-items {
   display: flex;
   flex-direction: column;
@@ -42,4 +61,12 @@
   background-color: white !important;
   color: var(--primary) !important;
   border-radius: 4px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: white;
 }
