@@ -86,61 +86,63 @@ export default function LayoutProvider({ children }: LayoutProps) {
           {pathname === '/login' || pathname === '/register' ? (
             <div>{children}</div>
           ) : (
-            <div className="layout-parent">
-              <div className="sidebar">
-                <div className="logo">
-                  {isSideBarExpanded && <h1>Jobs</h1>}
-                  {!isSideBarExpanded && (
-                    <i
-                      className="ri-menu-line"
-                      onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
-                    ></i>
-                  )}
-                  {isSideBarExpanded && (
-                    <i
-                      className="ri-close-line"
-                      onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
-                    ></i>
-                  )}
-                </div>
+            currentUser && (
+              <div className="layout-parent">
+                <div className="sidebar">
+                  <div className="logo">
+                    {isSideBarExpanded && <h1>Jobs</h1>}
+                    {!isSideBarExpanded && (
+                      <i
+                        className="ri-menu-line"
+                        onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
+                      ></i>
+                    )}
+                    {isSideBarExpanded && (
+                      <i
+                        className="ri-close-line"
+                        onClick={() => setIsSideBarExpanded(!isSideBarExpanded)}
+                      ></i>
+                    )}
+                  </div>
 
-                <div className="menu-items">
-                  {menuItems.map((item, index) => {
-                    const isActive = pathname === item.path;
+                  <div className="menu-items">
+                    {menuItems.map((item, index) => {
+                      const isActive = pathname === item.path;
 
-                    return (
-                      <div
-                        className={`menu-item ${
-                          isActive ? 'active-menu-item' : ''
-                        }`}
-                        key={index}
-                        style={{
-                          justifyContent: isSideBarExpanded
-                            ? 'flex-start'
-                            : 'center',
-                        }}
-                        onClick={() => router.push(item.path)}
-                      >
-                        <i className={item.icon}></i>
-                        {isSideBarExpanded && <span>{item.name}</span>}
+                      return (
+                        <div
+                          className={`menu-item ${
+                            isActive ? 'active-menu-item' : ''
+                          }`}
+                          key={index}
+                          style={{
+                            justifyContent: isSideBarExpanded
+                              ? 'flex-start'
+                              : 'center',
+                          }}
+                          onClick={() => router.push(item.path)}
+                        >
+                          <i className={item.icon}></i>
+                          {isSideBarExpanded && <span>{item.name}</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="user-info">
+                    {isSideBarExpanded && (
+                      <div className="flex flex-col">
+                        <span>{currentUser?.name}</span>
+                        <span>{currentUser?.email}</span>
                       </div>
-                    );
-                  })}
-                </div>
+                    )}
 
-                <div className="user-info">
-                  {isSideBarExpanded && (
-                    <div className="flex flex-col">
-                      <span>{currentUser?.name}</span>
-                      <span>{currentUser?.email}</span>
-                    </div>
-                  )}
-
-                  <i className="ri-logout-box-r-line" onClick={onLogout}></i>
+                    <i className="ri-logout-box-r-line" onClick={onLogout}></i>
+                  </div>
                 </div>
+                <div className="body">{children}</div>
               </div>
-              <div className="body">{children}</div>
-            </div>
+            )
           )}
         </ConfigProvider>
       </body>

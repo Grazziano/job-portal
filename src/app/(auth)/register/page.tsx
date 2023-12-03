@@ -5,6 +5,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
+import { useRouter } from 'next/navigation';
 
 interface RegisterProps {
   userType: string;
@@ -15,12 +16,14 @@ interface RegisterProps {
 
 export default function Register() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const onFinish = async (values: RegisterProps) => {
     try {
       dispatch(SetLoading(true));
       const response = await axios.post('/api/users/register', values);
       message.success(response.data.message);
+      router.push('/login');
     } catch (error: any) {
       message.error(error.response.data.message || 'Something went wrong');
     } finally {
