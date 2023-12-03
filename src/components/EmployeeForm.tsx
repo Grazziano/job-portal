@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Form, Row } from 'antd';
+import { Button, Col, Form, Row, Space } from 'antd';
 
 export default function EmployeeForm() {
   return (
@@ -47,6 +47,234 @@ export default function EmployeeForm() {
           </Form.Item>
         </Col>
       </Row>
+
+      {/* education */}
+      <div
+        style={{
+          marginTop: 35,
+        }}
+      >
+        <h1 className="text-md">Education</h1>
+        <Form.List name="education">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <Row key={key} gutter={[16, 16]} align="bottom">
+                  <Col span={8}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'qualification']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Qualification"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={8}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'institution']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Institution"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={4}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'year']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Year"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={3}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'percentage']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Percentage"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <i
+                    className="ri-delete-bin-line"
+                    onClick={() => remove(name)}
+                  ></i>
+                </Row>
+              ))}
+              <Form.Item className="my-2">
+                <Button type="dashed" onClick={() => add()} block>
+                  Add Education
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      </div>
+
+      {/* skills */}
+      <div
+        style={{
+          marginTop: 35,
+        }}
+      >
+        <h1 className="text-md">Skills</h1>
+        <Form.List name="skills">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <Row key={key} gutter={[16, 16]} align="bottom">
+                  <Col span={8}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'tecnology']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Tecnology"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={8}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'rating']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Rating"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <i
+                    className="ri-delete-bin-line"
+                    onClick={() => remove(name)}
+                  ></i>
+                </Row>
+              ))}
+              <Form.Item className="my-2">
+                <Button type="dashed" onClick={() => add()} block>
+                  Add Skill
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      </div>
+
+      {/* experience */}
+      <div
+        style={{
+          marginTop: 35,
+        }}
+      >
+        <h1 className="text-md">Experience</h1>
+        <Form.List name="experience">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <Row key={key} gutter={[16, 16]} align="bottom">
+                  <Col span={8}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'company']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Company"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={8}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'role']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="role"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={8}>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'period']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Required',
+                        },
+                      ]}
+                      label="Period of Work"
+                    >
+                      <input type="text" />
+                    </Form.Item>
+                  </Col>
+
+                  <i
+                    className="ri-delete-bin-line"
+                    onClick={() => remove(name)}
+                  ></i>
+                </Row>
+              ))}
+              <Form.Item className="my-2">
+                <Button type="dashed" onClick={() => add()} block>
+                  Add Experience
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      </div>
     </>
   );
 }
