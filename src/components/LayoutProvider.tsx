@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { ConfigProvider, message } from 'antd';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetCurrentUser } from '@/redux/usersSlice';
@@ -18,6 +18,7 @@ export default function LayoutProvider({ children }: LayoutProps) {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.users);
   const { loading } = useSelector((state: any) => state.loaders);
+  const router = useRouter();
 
   const getCurrentUser = async () => {
     try {
@@ -36,6 +37,19 @@ export default function LayoutProvider({ children }: LayoutProps) {
       getCurrentUser();
     }
   }, [pathname]);
+
+  const onLogout = async () => {
+    try {
+      dispatch(SetLoading(true));
+      await axios.post('/api/users/logout');
+      dispatch(SetCurrentUser(null));
+      router.push('/login');
+    } catch (error: any) {
+      message.error(error.response.data.message || 'Something went wrong');
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
 
   const menuItems = [
     { name: 'Home', path: '/', icon: 'ri-home-7-line' },
@@ -120,7 +134,7 @@ export default function LayoutProvider({ children }: LayoutProps) {
                     </div>
                   )}
 
-                  <i className="ri-logout-box-r-line"></i>
+                  <i className="ri-logout-box-r-line" onClick={onLogout}></i>
                 </div>
               </div>
               <div className="body">{children}</div>
