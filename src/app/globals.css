@@ -21,16 +21,22 @@ button:hover {
   background-color: #4f709c !important;
 }
 
-input {
+input,
+textarea {
   height: 45px;
   width: 100%;
   border: 1px solid #c6c6c6;
   padding-left: 15px;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   outline: none;
   border: 1px solid #353535;
+}
+
+textarea {
+  min-height: 100px;
 }
 
 label {
