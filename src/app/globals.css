@@ -6,11 +6,16 @@
 
 * {
   font-family: 'Montserrat', sans-serif !important;
+}
+
+html,
+body {
   color: #3b3a3a;
 }
 
 button {
   background-color: #213555 !important;
+  color: white !important;
   border: none !important;
   outline: none !important;
   height: 45px !important;
