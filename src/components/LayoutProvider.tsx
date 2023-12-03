@@ -33,7 +33,7 @@ export default function LayoutProvider({ children }: LayoutProps) {
   };
 
   useEffect(() => {
-    if (pathname !== '/login' && pathname !== '/register') {
+    if (pathname !== '/login' && pathname !== '/register' && !currentUser) {
       getCurrentUser();
     }
   }, [pathname]);
@@ -119,6 +119,7 @@ export default function LayoutProvider({ children }: LayoutProps) {
                             ? 'flex-start'
                             : 'center',
                         }}
+                        onClick={() => router.push(item.path)}
                       >
                         <i className={item.icon}></i>
                         {isSideBarExpanded && <span>{item.name}</span>}
