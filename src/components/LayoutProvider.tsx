@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetCurrentUser } from '@/redux/usersSlice';
+import { SetLoading } from '@/redux/loadersSlice';
+import Loader from './Loader';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,18 +17,24 @@ export default function LayoutProvider({ children }: LayoutProps) {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.users);
+  const { loading } = useSelector((state: any) => state.loaders);
 
   const getCurrentUser = async () => {
     try {
+      dispatch(SetLoading(true));
       const response = await axios.get('/api/users/currentuser');
       dispatch(SetCurrentUser(response.data.data));
     } catch (error: any) {
       message.error(error.response.data.message || 'Something went wrong');
+    } finally {
+      dispatch(SetLoading(false));
     }
   };
 
   useEffect(() => {
-    getCurrentUser();
+    if (pathname !== '/login' && pathname !== '/register') {
+      getCurrentUser();
+    }
   }, [pathname]);
 
   const menuItems = [
@@ -57,6 +65,8 @@ export default function LayoutProvider({ children }: LayoutProps) {
             },
           }}
         >
+          {loading && <Loader />}
+
           {/* if route is login or register, dont show layout */}
           {pathname === '/login' || pathname === '/register' ? (
             <div>{children}</div>

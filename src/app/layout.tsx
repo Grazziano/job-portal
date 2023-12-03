@@ -3,6 +3,7 @@ import './globals.css';
 import '../stylesheets/commonClasses.css';
 import '../stylesheets/antdOverride.css';
 import '../stylesheets/layout.css';
+import '../stylesheets/loader.css';
 import LayoutProvider from '@/components/LayoutProvider';
 import ReduxProvider from '@/components/ReduxProvider';
 
