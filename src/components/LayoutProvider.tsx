@@ -42,6 +42,7 @@ export default function LayoutProvider({ children }: LayoutProps) {
     try {
       dispatch(SetLoading(true));
       await axios.post('/api/users/logout');
+      message.success('Logged out successfully');
       dispatch(SetCurrentUser(null));
       router.push('/login');
     } catch (error: any) {
