@@ -3,20 +3,21 @@ import React, { useEffect, useState } from 'react';
 import PageTitle from '@/components/PageTitle';
 import { Button, Table, message } from 'antd';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import moment from 'moment';
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
+  const { currentUser } = useSelector((state: any) => state.users);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const fetchJobs = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await axios.get('/api/jobs');
+      const response = await axios.get(`/api/jobs?user=${currentUser._id}`);
       setJobs(response.data.data);
     } catch (error: any) {
       message.error(error.message);
