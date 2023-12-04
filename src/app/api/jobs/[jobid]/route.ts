@@ -40,3 +40,16 @@ export async function PUT(request: NextRequest, { params }: JobParamsProps) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: JobParamsProps) {
+  try {
+    validateJWT(request);
+    const job = await Job.findByIdAndDelete(params.jobid);
+    return NextResponse.json({
+      message: 'Job deleted successfully',
+      data: job,
+    });
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}

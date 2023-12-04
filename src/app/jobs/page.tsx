@@ -25,6 +25,19 @@ export default function Jobs() {
     }
   };
 
+  const deleteJob = async (jobId: string) => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.delete(`/api/jobs/${jobId}`);
+      message.success(response.data.message);
+      fetchJobs();
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
+
   useEffect(() => {
     fetchJobs();
   }, []);
@@ -60,7 +73,10 @@ export default function Jobs() {
       dataIndex: 'actions',
       render: (text: any, record: any) => (
         <div className="flex gap-3">
-          <i className="ri-delete-bin-line"></i>
+          <i
+            className="ri-delete-bin-line"
+            onClick={() => deleteJob(record._id)}
+          ></i>
           <i
             className="ri-pencil-line"
             onClick={() => router.push(`/jobs/edit/${record._id}`)}
