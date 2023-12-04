@@ -1,12 +1,30 @@
 'use client';
 import React from 'react';
 import PageTitle from '@/components/PageTitle';
-import { Button, Form } from 'antd';
+import { Button, Form, message } from 'antd';
 import { useRouter } from 'next/navigation';
 import JobPostForm from '@/components/JobPostForm';
+import { useDispatch } from 'react-redux';
+import { SetLoading } from '@/redux/loadersSlice';
+import axios from 'axios';
 
 export default function NewJob() {
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  const onFinish = async (values: any) => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.post('/api/jobs', values);
+      message.success(response.data.message);
+      router.push('/jobs');
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
 
   return (
     <div>
@@ -17,7 +35,7 @@ export default function NewJob() {
         </Button>
       </div>
 
-      <Form layout="vertical">
+      <Form layout="vertical" onFinish={onFinish}>
         <JobPostForm />
 
         <div className="flex justify-end items-center gap-3 my-3">

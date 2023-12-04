@@ -27,8 +27,13 @@ export default function JobPostForm() {
       </Col>
 
       <Col span={8}>
-        <Form.Item label="Type" name="type">
+        <Form.Item
+          label="Type"
+          rules={[{ required: true, message: 'Please enter a job type' }]}
+          name="jobType"
+        >
           <select>
+            <option value=""></option>
             <option value="full-time">Full Time</option>
             <option value="part-time">Part Time</option>
             <option value="contract">Contract</option>
@@ -37,20 +42,33 @@ export default function JobPostForm() {
       </Col>
 
       <Col span={8}>
-        <Form.Item label="Location" name="location">
+        <Form.Item
+          label="Location"
+          rules={[{ required: true, message: 'Please enter a location' }]}
+          name="location"
+        >
           <input type="text" />
         </Form.Item>
       </Col>
 
       <Col span={8}>
-        <Form.Item label="Experience" name="experience">
-          <input type="text" />
+        <Form.Item
+          label="Experience"
+          rules={[{ required: true, message: 'Please enter experience' }]}
+          name="experience"
+        >
+          <input type="number" />
         </Form.Item>
       </Col>
 
       <Col span={8}>
-        <Form.Item label="Work Mode" name="workMode">
+        <Form.Item
+          label="Work Mode"
+          rules={[{ required: true, message: 'Please enter work mode' }]}
+          name="workMode"
+        >
           <select>
+            <option value=""></option>
             <option value="remote">Remote</option>
             <option value="office">Office</option>
           </select>
@@ -58,14 +76,24 @@ export default function JobPostForm() {
       </Col>
 
       <Col span={8}>
-        <Form.Item label="Salary From Range" name="salaryFromRange">
-          <input type="text" />
+        <Form.Item
+          label="Salary From Range"
+          rules={[
+            { required: true, message: 'Please enter salary from range' },
+          ]}
+          name="salaryFromRange"
+        >
+          <input type="number" />
         </Form.Item>
       </Col>
 
       <Col span={8}>
-        <Form.Item label="Salary To Range" name="salaryToRange">
-          <input type="text" />
+        <Form.Item
+          label="Salary To Range"
+          rules={[{ required: true, message: 'Please enter salary to range' }]}
+          name="salaryToRange"
+        >
+          <input type="number" />
         </Form.Item>
       </Col>
     </Row>
