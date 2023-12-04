@@ -14,6 +14,17 @@ interface LayoutProps {
 
 export default function LayoutProvider({ children }: LayoutProps) {
   const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);
+  const [menuItems, setMenuItems] = useState([
+    { name: 'Home', path: '/', icon: 'ri-home-7-line' },
+    { name: 'Profile', path: '/profile', icon: 'ri-shield-user-line' },
+    {
+      name: 'Applications',
+      path: '/applications',
+      icon: 'ri-file-list-2-line',
+    },
+    { name: 'Settings', path: '/settings', icon: 'ri-settings-2-line' },
+    { name: 'Saved', path: '/saved', icon: 'ri-save-line' },
+  ]);
   const pathname = usePathname();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.users);
@@ -24,6 +35,15 @@ export default function LayoutProvider({ children }: LayoutProps) {
     try {
       dispatch(SetLoading(true));
       const response = await axios.get('/api/users/currentuser');
+      const isEmployer = response.data.data.userType === 'employer';
+
+      if (isEmployer) {
+        const tempMenuItems = menuItems;
+        tempMenuItems[2].name = 'Posted Jobs';
+        tempMenuItems[2].path = '/jobs';
+        setMenuItems(tempMenuItems);
+      }
+
       dispatch(SetCurrentUser(response.data.data));
     } catch (error: any) {
       message.error(error.response.data.message || 'Something went wrong');
@@ -51,18 +71,6 @@ export default function LayoutProvider({ children }: LayoutProps) {
       dispatch(SetLoading(false));
     }
   };
-
-  const menuItems = [
-    { name: 'Home', path: '/', icon: 'ri-home-7-line' },
-    { name: 'Profile', path: '/profile', icon: 'ri-shield-user-line' },
-    {
-      name: 'Applications',
-      path: '/applications',
-      icon: 'ri-file-list-2-line',
-    },
-    { name: 'Settings', path: '/settings', icon: 'ri-settings-2-line' },
-    { name: 'Saved', path: '/saved', icon: 'ri-save-line' },
-  ];
 
   return (
     <html lang="en">
