@@ -1,6 +1,11 @@
 'use client';
-import React from 'react';
-import { Modal } from 'antd';
+import React, { useEffect, useState } from 'react';
+import PageTitle from '@/components/PageTitle';
+import { Button, Modal, Table, message } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetLoading } from '@/redux/loadersSlice';
+import axios from 'axios';
+import moment from 'moment';
 
 interface ApplicationsProps {
   showApplications: boolean;
@@ -13,11 +18,72 @@ export default function Applications({
   setShowApplications,
   selectedJob,
 }: ApplicationsProps) {
+  const [applications, setApplications] = useState([]);
+  const dispatch = useDispatch();
+
+  const fetchApplications = async () => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.get(
+        `/api/applications?job=${selectedJob._id}`
+      );
+      setApplications(response.data.data);
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
+
+  const onStatusUpdate = async (applicationId: string, status: string) => {};
+
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  const columns = [
+    {
+      title: 'Application ID',
+      dataIndex: '_id',
+    },
+    {
+      title: 'Applicant',
+      dataIndex: 'user',
+      render: (user: any) => user.name,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'user',
+      render: (user: any) => user.email,
+    },
+    {
+      title: 'Apply On',
+      dataIndex: 'created_at',
+      render: (createdAt: any) => moment(createdAt).format('DD/MM/YYYY'),
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      render: (status: string) => (
+        <select value={status}>
+          <option value="pending">Pending</option>
+          <option value="shortlisted">Shortlisted</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      ),
+    },
+  ];
+
   return (
     <Modal
-      title="Applications"
+      title={`Applications for ${selectedJob.title}`}
       open={showApplications}
       onCancel={() => setShowApplications(false)}
-    ></Modal>
+      width={1000}
+    >
+      <div className="my-3">
+        <Table columns={columns} dataSource={applications} />
+      </div>
+    </Modal>
   );
 }
