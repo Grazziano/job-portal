@@ -59,6 +59,11 @@ a {
   color: var(--primary) !important;
 }
 
+i {
+  font-size: 22px;
+  cursor: pointer;
+}
+
 table {
   border: 1px solid #c7c7c7 !important;
   border-radius: 2px !important;

@@ -1,14 +1,17 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import PageTitle from '@/components/PageTitle';
-import { Button, Table, message } from 'antd';
+import { Button, Table, message, Tooltip } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import moment from 'moment';
+import Applications from '@/components/Applications';
 
 export default function Jobs() {
+  const [selectedJob, setSelectedJob] = useState({} as any);
+  const [showApplications, setShowApplications] = useState<boolean>(false);
   const [jobs, setJobs] = useState([]);
   const { currentUser } = useSelector((state: any) => state.users);
   const dispatch = useDispatch();
@@ -74,14 +77,29 @@ export default function Jobs() {
       dataIndex: 'actions',
       render: (text: any, record: any) => (
         <div className="flex gap-3">
-          <i
-            className="ri-delete-bin-line"
-            onClick={() => deleteJob(record._id)}
-          ></i>
-          <i
-            className="ri-pencil-line"
-            onClick={() => router.push(`/jobs/edit/${record._id}`)}
-          ></i>
+          <Tooltip title="Delete">
+            <i
+              className="ri-delete-bin-line"
+              onClick={() => deleteJob(record._id)}
+            ></i>
+          </Tooltip>
+
+          <Tooltip title="Edit">
+            <i
+              className="ri-pencil-line"
+              onClick={() => router.push(`/jobs/edit/${record._id}`)}
+            ></i>
+          </Tooltip>
+
+          <Tooltip title="Applications">
+            <i
+              className="ri-file-list-3-line"
+              onClick={() => {
+                setSelectedJob(record);
+                setShowApplications(true);
+              }}
+            ></i>
+          </Tooltip>
         </div>
       ),
     },
@@ -99,6 +117,14 @@ export default function Jobs() {
       <div className="my-3">
         <Table columns={columns} dataSource={jobs} />
       </div>
+
+      {showApplications && (
+        <Applications
+          showApplications={showApplications}
+          setShowApplications={setShowApplications}
+          selectedJob={selectedJob}
+        />
+      )}
     </div>
   );
 }
