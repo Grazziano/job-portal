@@ -47,6 +47,8 @@ export default function LayoutProvider({ children }: LayoutProps) {
       dispatch(SetCurrentUser(response.data.data));
     } catch (error: any) {
       message.error(error.response.data.message || 'Something went wrong');
+      message.error('Please clear your cookies e try again');
+      router.push('/login');
     } finally {
       dispatch(SetLoading(false));
     }
