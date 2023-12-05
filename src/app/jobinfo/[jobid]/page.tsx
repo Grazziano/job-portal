@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import { Button, Col, Row, message } from 'antd';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import PageTitle from '@/components/PageTitle';
 import Divider from '@/components/Divider';
 
 export default function JobInfo() {
+  const { currentUser } = useSelector((state: any) => state.users);
   const { jobid } = useParams();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -30,7 +31,21 @@ export default function JobInfo() {
     fetchJob();
   }, []);
 
-  const onApply = async () => {};
+  const onApply = async () => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.post(`/api/applications`, {
+        job: jobData._id,
+        user: currentUser._id,
+        status: 'pending',
+      });
+      message.success(response.data.message);
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
 
   return (
     jobData && (
@@ -81,7 +96,11 @@ export default function JobInfo() {
               <Button type="default" onClick={() => router.back()}>
                 Cancel
               </Button>
-              <Button type="primary" onClick={onApply}>
+              <Button
+                type="primary"
+                onClick={onApply}
+                disabled={currentUser._id === jobData.user}
+              >
                 Apply
               </Button>
             </div>
