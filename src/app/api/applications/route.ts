@@ -43,7 +43,12 @@ export async function GET(request: NextRequest) {
 
     const application = await Application.find(filtersObject)
       .populate('user')
-      .populate('job');
+      .populate({
+        path: 'job',
+        populate: {
+          path: 'user',
+        },
+      });
 
     return NextResponse.json({
       message: 'Applications fetched successfully',
