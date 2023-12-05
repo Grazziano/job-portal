@@ -14,6 +14,7 @@ export default function JobInfo() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [jobData, setJobData] = useState<any>(null);
+  const [applications, setApplications] = useState<[]>([]);
 
   const fetchJob = async () => {
     try {
@@ -27,8 +28,23 @@ export default function JobInfo() {
     }
   };
 
+  const fetchApplications = async () => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.get(
+        `/api/applications?job=${jobid}&user=${currentUser._id}`
+      );
+      setApplications(response.data.data);
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
+
   useEffect(() => {
     fetchJob();
+    fetchApplications();
   }, []);
 
   const onApply = async () => {
@@ -56,7 +72,7 @@ export default function JobInfo() {
           <Col span={12} className="flex flex-col gap-2">
             <div className="flex justify-between">
               <span>Company</span>
-              <span>{jobData.user.name}</span>
+              <span>{jobData.user?.name}</span>
             </div>
 
             <div className="flex justify-between">
@@ -87,10 +103,17 @@ export default function JobInfo() {
             </div>
           </Col>
 
-          <Col span={24}>
+          <Col span={24} className="flex flex-col gap-2">
             <h1 className="text-md">Job Description</h1>
             <Divider />
             <span>{jobData.description}</span>
+
+            {applications.length > 0 && (
+              <span className="my-3 info p-3">
+                You have already applied for this job. Please wait for the
+                employer to respond.
+              </span>
+            )}
 
             <div className="flex justify-end gap-3">
               <Button type="default" onClick={() => router.back()}>
@@ -99,7 +122,9 @@ export default function JobInfo() {
               <Button
                 type="primary"
                 onClick={onApply}
-                disabled={currentUser._id === jobData.user}
+                disabled={
+                  currentUser._id === jobData.user || applications.length > 0
+                }
               >
                 Apply
               </Button>

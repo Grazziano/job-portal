@@ -29,11 +29,16 @@ export async function GET(request: NextRequest) {
     // fetch query string parameters
     const { searchParams } = new URL(request.url);
     const user = searchParams.get('user');
+    const job = searchParams.get('job');
 
     const filtersObject: any = {};
 
     if (user) {
       filtersObject['user'] = user;
+    }
+
+    if (job) {
+      filtersObject['job'] = job;
     }
 
     const application = await Application.find(filtersObject)

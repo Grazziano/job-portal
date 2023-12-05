@@ -23,3 +23,8 @@
   border-bottom: 1px solid #e0e0e0;
   height: 1px;
 }
+
+.info {
+  background-color: #03920f;
+  color: white;
+}
