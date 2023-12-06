@@ -38,11 +38,11 @@ export async function GET(request: NextRequest) {
       filtersObject['user'] = user;
     }
 
-    if (searchText !== '') {
+    if (searchText && searchText !== '') {
       filtersObject['title'] = { $regex: searchText, $options: 'i' };
     }
 
-    if (location !== '') {
+    if (location && location !== '') {
       filtersObject['location'] = { $regex: location, $options: 'i' };
     }
 

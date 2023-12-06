@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { ConfigProvider, message } from 'antd';
+import { ConfigProvider, message, Tooltip } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -98,7 +98,12 @@ export default function LayoutProvider({ children }: LayoutProps) {
           ) : (
             currentUser && (
               <div className="layout-parent">
-                <div className="sidebar">
+                <div
+                  className="sidebar"
+                  style={{
+                    width: isSideBarExpanded ? '250px' : 'auto',
+                  }}
+                >
                   <div className="logo">
                     {isSideBarExpanded && <h1>Jobs</h1>}
                     {!isSideBarExpanded && (
@@ -139,11 +144,20 @@ export default function LayoutProvider({ children }: LayoutProps) {
                     })}
                   </div>
 
-                  <div className="user-info">
+                  <div className="user-info flex justify-between items-center">
                     {isSideBarExpanded && (
-                      <div className="flex flex-col">
+                      <div className="flex flex-col truncate">
                         <span>{currentUser?.name}</span>
-                        <span>{currentUser?.email}</span>
+                        <Tooltip title={currentUser?.email}>
+                          <span className="text-ellipsis overflow-hidden hover:text-clip">
+                            {currentUser?.email}
+                          </span>
+                        </Tooltip>
+                        {/* <span>
+                          {currentUser?.userType === 'employer'
+                            ? 'Employer'
+                            : 'Employee'}
+                        </span> */}
                       </div>
                     )}
 
