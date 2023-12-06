@@ -18,7 +18,7 @@ export default function Filters({
   getData,
 }: FiltersProps) {
   return (
-    <div className="flex gap-3 my-3 items-end">
+    <div className="flex gap-3 my-3 items-end p-2">
       <div>
         <span>Search Jobs</span>
         <input
