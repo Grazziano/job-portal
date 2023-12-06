@@ -21,11 +21,12 @@ export const sendEmail = async ({ to, subject, text, html }: EmailRequest) => {
     await transporter.sendMail({
       from: 'Jobs Portal',
       to: to,
-      subject: '',
+      subject: subject,
       text: text,
       html: html,
     });
   } catch (error) {
+    console.log(error);
     return error;
   }
 };
