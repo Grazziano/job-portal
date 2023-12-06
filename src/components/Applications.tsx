@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
 
 interface ApplicationsProps {
   showApplications: boolean;
@@ -20,6 +21,7 @@ export default function Applications({
 }: ApplicationsProps) {
   const [applications, setApplications] = useState([]);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const fetchApplications = async () => {
     try {
@@ -86,6 +88,17 @@ export default function Applications({
           <option value="shortlisted">Shortlisted</option>
           <option value="rejected">Rejected</option>
         </select>
+      ),
+    },
+    {
+      title: 'Actions',
+      dataIndex: '_id',
+      render: (applicationId: string, application: any) => (
+        <Button
+          onClick={() => router.push(`/userinfo/${application.user._id}`)}
+        >
+          View
+        </Button>
       ),
     },
   ];

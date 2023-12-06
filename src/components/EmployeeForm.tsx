@@ -238,7 +238,7 @@ export default function EmployeeForm() {
                           message: 'Required',
                         },
                       ]}
-                      label="role"
+                      label="Role"
                     >
                       <input type="text" />
                     </Form.Item>
