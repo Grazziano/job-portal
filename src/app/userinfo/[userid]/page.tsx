@@ -39,7 +39,11 @@ export default function UserInfo() {
           } Info`}
         />
 
-        {userInfo.userType === 'employer' ? <EmployerInfo /> : <EmployeeInfo />}
+        {userInfo.userType === 'employer' ? (
+          <EmployerInfo employerInfo={userInfo} />
+        ) : (
+          <EmployeeInfo />
+        )}
       </div>
     )
   );
