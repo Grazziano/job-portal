@@ -17,7 +17,7 @@ export async function PUT(request: NextRequest, { params }: JobParamsProps) {
   try {
     validateJWT(request);
     const reqBody = await request.json();
-    const application = await Application.findByIdAndUpdate(
+    const application: any = await Application.findByIdAndUpdate(
       params.applicationid,
       reqBody,
       {
@@ -34,7 +34,7 @@ export async function PUT(request: NextRequest, { params }: JobParamsProps) {
       });
 
     await sendEmail({
-      to: application?.user?.email,
+      to: application?.user.email,
       subject: 'Your application status has been updated',
       text: `Your application status has been updated to ${application?.status}`,
       html: `<div>
