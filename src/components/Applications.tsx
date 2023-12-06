@@ -35,7 +35,20 @@ export default function Applications({
     }
   };
 
-  const onStatusUpdate = async (applicationId: string, status: string) => {};
+  const onStatusUpdate = async (applicationId: string, status: string) => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.put(`/api/applications/${applicationId}`, {
+        status,
+      });
+      message.success(response.data.message);
+      fetchApplications();
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
 
   useEffect(() => {
     fetchApplications();
@@ -64,8 +77,11 @@ export default function Applications({
     {
       title: 'Status',
       dataIndex: 'status',
-      render: (status: string) => (
-        <select value={status}>
+      render: (status: string, record: any) => (
+        <select
+          value={status}
+          onChange={(e) => onStatusUpdate(record._id, e.target.value)}
+        >
           <option value="pending">Pending</option>
           <option value="shortlisted">Shortlisted</option>
           <option value="rejected">Rejected</option>
