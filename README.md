@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Job Portal Application
 
-## Getting Started
+Este é um portal de empregos desenvolvido com Next.js 13, MongoDB, Ant Design (antd), TailwindCSS e TypeScript. O projeto visa fornecer uma plataforma intuitiva para empregadores postarem vagas de emprego e candidatos se inscreverem nelas.
 
-First, run the development server:
+## Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Next.js 13**: Framework React para desenvolvimento front-end e back-end.
+- **MongoDB**: Banco de dados NoSQL para armazenar informações sobre empregos e candidatos.
+- **Ant Design (antd)**: Biblioteca de componentes para construir interfaces de usuário modernas e responsivas.
+- **TailwindCSS**: Framework de utilitários para estilização rápida e customização.
+- **TypeScript**: Linguagem que adiciona tipagem estática ao JavaScript, melhorando a robustez do código.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Cadastro de usuários (empregadores e candidatos).
+- Autenticação JWT.
+- Postagem e gerenciamento de vagas de emprego.
+- Aplicação a vagas de emprego por candidatos.
+- Sistema de busca e filtragem de vagas.
+- Dashboard para empregadores e candidatos.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Instalação
 
-## Learn More
+1. Clone este repositório:
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    git clone https://github.com/Grazziano/job-portal.git
+    cd job-portal-application
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Instale as dependências:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3. Configure as variáveis de ambiente:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    Crie um arquivo `.env.local` na raiz do projeto e adicione as seguintes variáveis:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    MONGO_URL=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret
+    AUTH_USER=your_auth_email
+    AUTH_PASSWORD=your_auth_password
+    ```
+
+4. Execute o projeto:
+
+    ```bash
+    npm run dev
+    ```
+
+    O projeto estará disponível em `http://localhost:3000`.
+
+## Imagens
+
+Aqui você pode adicionar capturas de tela do seu projeto para mostrar seu layout e funcionalidade. Exemplos:
+
+![Login](./public/screenshots/login.png)
+*Login*
+
+![Register](./public/screenshots/register.png)
+*Register*
+
+![Home Page](./public/screenshots/home.png)
+*Home page com listagem de vagas*
+
+![Profile](./public/screenshots/profile.png)
+*Perfil do usuário*
+
+![Applications](./public/screenshots/applications.png)
+*Vagas inscritas*
+
+## Contribuição
+
+Sinta-se à vontade para abrir issues e enviar pull requests para melhorias.
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo `LICENSE` para mais informações.
